@@ -1,7 +1,7 @@
 {
   "name": "react-native-draggable-list",
   "version": "0.2.0",
-  "description": "A versatile list component which helps you generate a list whose items can be sorted.",
+  "description": "A versatile list component that helps you generate a list whose items can be sorted.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
