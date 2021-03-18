@@ -1,9 +1,13 @@
 {
-  "name": "react-native-draggable-list",
+  "name": "@GiridharKarnik/react-native-draggable-list",
   "version": "0.2.0",
   "description": "A versatile list component that helps you generate a list whose items can be sorted.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/GiridharKarnik/react-native-draggable-list.git"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest"
@@ -23,7 +27,7 @@
     "sort",
     "list"
   ],
-  "author": "Giridhar Karnik",
+  "author": "giridhar_karnik",
   "license": "MIT",
   "peerDependencies": {
     "react-native": ">=0.63.4",
@@ -43,5 +47,16 @@
     "react-test-renderer": "^17.0.1",
     "typescript": "^4.2.3",
     "husky": "^5.1.3"
-  }
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "bugs": {
+    "url": "https://github.com/GiridharKarnik/react-native-draggable-list/issues"
+  },
+  "homepage": "https://github.com/GiridharKarnik/react-native-draggable-list#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {}
 }
