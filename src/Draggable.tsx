@@ -16,16 +16,11 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import {
-  animationConfig,
-  getOrder,
-  getPosition,
-  Positions,
-  SIZE,
-} from './Config';
+import { animationConfig, getOrder, getPosition, Positions } from './Config';
 
 interface DraggableProps {
   children: ReactNode;
+  rowHeight: number;
   scrollRef: MutableRefObject<any>;
   id: string | number;
   positions: Animated.SharedValue<Positions>;
@@ -37,6 +32,7 @@ interface DraggableProps {
 
 const Draggable: React.FC<DraggableProps> = ({
   children,
+  rowHeight,
   scrollRef,
   id,
   scrollY,
@@ -50,18 +46,16 @@ const Draggable: React.FC<DraggableProps> = ({
 
   const beingDragged = useSharedValue<boolean>(false);
 
-  console.log(`container Height ${containerHeight.value}`);
+  const contentHeight = Object.keys(positions.value).length * rowHeight;
 
-  const contentHeight = Object.keys(positions.value).length * SIZE;
-
-  const position = getPosition(positions.value[id]!);
+  const position = getPosition(positions.value[id]!, rowHeight);
   const translateY = useSharedValue(position.y);
 
   useAnimatedReaction(
     () => positions.value[id]!,
     (newOrder) => {
       if (!beingDragged.value) {
-        const pos = getPosition(newOrder);
+        const pos = getPosition(newOrder, rowHeight);
         translateY.value = withTiming(pos.y, animationConfig);
       }
     },
@@ -81,6 +75,7 @@ const Draggable: React.FC<DraggableProps> = ({
         const newOrder = getOrder(
           translateY.value,
           Object.keys(positions.value).length - 1,
+          rowHeight,
         );
 
         // 2. We swap the positions
@@ -101,19 +96,11 @@ const Draggable: React.FC<DraggableProps> = ({
 
         // 3. Scroll up and down if necessary
         const lowerBound = scrollY.value;
-        const upperBound = lowerBound + containerHeight.value - SIZE;
+        const upperBound = lowerBound + containerHeight.value - rowHeight;
         const maxScroll = contentHeight - containerHeight.value;
         const leftToScrollDown = maxScroll - scrollY.value;
 
-        console.log(
-          `maxScroll ${maxScroll}, leftToScrollDown ${leftToScrollDown}, upperBound ${upperBound}`,
-        );
-
-        console.log(`lowerBound ${lowerBound}`);
-        console.log(`upperBound ${upperBound}`);
-
         if (translateY.value < lowerBound) {
-          // console.log(`should scroll up`);
           const diff = Math.min(lowerBound - translateY.value, lowerBound);
           scrollY.value -= diff;
           scrollTo(scrollRef, 0, scrollY.value, true);
@@ -134,7 +121,7 @@ const Draggable: React.FC<DraggableProps> = ({
       }
     },
     onEnd: () => {
-      const newPosition = getPosition(positions.value[id]!);
+      const newPosition = getPosition(positions.value[id]!, rowHeight);
       translateY.value = withTiming(newPosition.y, animationConfig, () => {
         runOnJS(onDragEnd)(positions.value);
       });
@@ -142,8 +129,6 @@ const Draggable: React.FC<DraggableProps> = ({
   });
 
   const handleLongPress = ({ nativeEvent }: any) => {
-    console.log('pressed');
-
     if (nativeEvent.state === State.ACTIVE) {
       beingDragged.value = true;
     } else if (
@@ -161,8 +146,8 @@ const Draggable: React.FC<DraggableProps> = ({
       position: 'absolute',
       top: 0,
       left: 0,
-      width: 100,
-      height: 140,
+      right: 0,
+      height: rowHeight,
       zIndex,
       transform: [{ translateY: translateY.value }, { scale }],
     };

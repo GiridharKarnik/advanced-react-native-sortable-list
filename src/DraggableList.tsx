@@ -6,16 +6,19 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import useComponentSize, { ViewMeasurements } from './useComponentSize';
-import { Positions, SIZE } from './Config';
+import { Positions } from './Config';
 import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 
 interface DraggableListProps {
   children: Array<ReactElement<{ id: string }>>;
+  //TODO: Dynamically calculate row height
+  rowHeight: number;
   onDragEnd: (diffs: Positions) => void;
 }
 
 const DraggableList: React.FC<DraggableListProps> = ({
   children,
+  rowHeight,
   onDragEnd,
 }) => {
   const scrollEnabled = useSharedValue<boolean>(false);
@@ -33,8 +36,6 @@ const DraggableList: React.FC<DraggableListProps> = ({
     containerHeight.value = size.height;
   }
 
-  console.log(JSON.stringify(size));
-
   const positions = useSharedValue<Positions>(
     Object.assign(
       {},
@@ -51,7 +52,7 @@ const DraggableList: React.FC<DraggableListProps> = ({
       ref={scrollRef}
       onScroll={onScroll}
       contentContainerStyle={{
-        height: children.length * SIZE,
+        height: children.length * rowHeight,
       }}
       onScrollBeginDrag={() => {
         scrollEnabled.value = true;
@@ -67,6 +68,7 @@ const DraggableList: React.FC<DraggableListProps> = ({
         return (
           <Draggable
             containerHeight={containerHeight}
+            rowHeight={rowHeight}
             key={child.props.id}
             id={child.props.id}
             scrollRef={scrollRef}
