@@ -1,6 +1,6 @@
 {
   "name": "advanced-react-native-sortable-list",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A versatile list component that helps you generate a list whose items can be sorted.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
