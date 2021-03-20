@@ -1,12 +1,12 @@
 {
-  "name": "@GiridharKarnik/react-native-draggable-list",
+  "name": "advanced-react-native-sortable-list",
   "version": "0.2.0",
   "description": "A versatile list component that helps you generate a list whose items can be sorted.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git://github.com/GiridharKarnik/react-native-draggable-list.git"
+    "url": "git://github.com/GiridharKarnik/advanced-react-native-sortable-list.git"
   },
   "scripts": {
     "build": "tsc",
@@ -27,7 +27,7 @@
     "sort",
     "list"
   ],
-  "author": "giridhar_karnik",
+  "author": "Giridhar Karnik",
   "license": "MIT",
   "peerDependencies": {
     "react-native": ">=0.63.4",
@@ -48,13 +48,10 @@
     "typescript": "^4.2.3",
     "husky": "^5.1.3"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "bugs": {
-    "url": "https://github.com/GiridharKarnik/react-native-draggable-list/issues"
+    "url": "https://github.com/GiridharKarnik/advanced-react-native-sortable-list/issues"
   },
-  "homepage": "https://github.com/GiridharKarnik/react-native-draggable-list#readme",
+  "homepage": "https://github.com/GiridharKarnik/advanced-react-native-sortable-list#readme",
   "directories": {
     "lib": "lib"
   },
