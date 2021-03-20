@@ -8,7 +8,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "advanced-react-native-sortable-list": "^0.2.1",
+    "advanced-react-native-sortable-list": "^0.2.2",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-gesture-handler": "^1.10.3",
