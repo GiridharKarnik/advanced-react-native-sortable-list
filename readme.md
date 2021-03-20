@@ -2,7 +2,7 @@
 A versatile list component that helps you generate a list whose items can be sorted.
 
 This library uses and depends on the latest [`react-native-gesture-handler`](https://docs.swmansion.com/react-native-gesture-handler/) and [`react-native-reanimated (version 2.0.0)`](https://docs.swmansion.com/react-native-reanimated/) libraries.
-Hence, to use this package your app must be compatible with those libraries in order for you to use this package.
+Hence, to use this package your app must be compatible with those libraries.
 
 ### Running the example
 
