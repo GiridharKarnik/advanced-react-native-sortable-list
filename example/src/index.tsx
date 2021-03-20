@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import DraggableList, { Positions } from '../../src';
+import DraggableList, { Positions } from 'advanced-react-native-sortable-list';
 
 const data = [
   {

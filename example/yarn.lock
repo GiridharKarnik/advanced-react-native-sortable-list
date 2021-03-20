@@ -1373,10 +1373,10 @@ acorn@^7.1.0, acorn@^7.1.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.1.tgz#feaed255973d2e77555b83dbc08851a6c63520fa"
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
-advanced-react-native-sortable-list@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/advanced-react-native-sortable-list/-/advanced-react-native-sortable-list-0.2.0.tgz#bdbeca7e516b49e92a08e02a872ea9f6fbe12461"
-  integrity sha512-Yk/Q2SCi947z1pKUU/ZwxY0C/Q2revc0duwi8vJhaxLi/hOnLxi9LM7iZ5ZiGyFXllkOeIbsDinoFGhR+BouwA==
+advanced-react-native-sortable-list@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/advanced-react-native-sortable-list/-/advanced-react-native-sortable-list-0.2.1.tgz#18323942b8e3f8d2c0eaf45f076d973d4c60aa76"
+  integrity sha512-1LXOoacjkpZOBpmQP7xvc3I/npwhNy+smdDBfhLG7me0NOHbjZlaxknQsfzqwcYH3cmf11JmAft7qwweDVOyyA==
 
 ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.3:
   version "6.12.6"
