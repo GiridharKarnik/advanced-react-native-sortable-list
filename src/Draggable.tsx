@@ -16,6 +16,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+
 import { animationConfig, getOrder, getPosition, Positions } from './Config';
 
 interface DraggableProps {
@@ -53,7 +54,7 @@ const Draggable: React.FC<DraggableProps> = ({
 
   useAnimatedReaction(
     () => positions.value[id]!,
-    (newOrder) => {
+    newOrder => {
       if (!beingDragged.value) {
         const pos = getPosition(newOrder, rowHeight);
         translateY.value = withTiming(pos.y, animationConfig);
@@ -82,7 +83,7 @@ const Draggable: React.FC<DraggableProps> = ({
         const oldOlder = positions.value[id];
         if (newOrder !== oldOlder) {
           const idToSwap = Object.keys(positions.value).find(
-            (key) => positions.value[key] === newOrder,
+            key => positions.value[key] === newOrder,
           );
           if (idToSwap) {
             // Spread operator is not supported in worklets
