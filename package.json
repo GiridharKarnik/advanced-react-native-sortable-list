@@ -10,11 +10,21 @@
   },
   "scripts": {
     "build": "tsc",
-    "semantic-release": "semantic-release"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "semantic-release": "semantic-release",
+    "prettier-check": "prettier --check '**/*.{ts,json}'",
+    "prettier-format": "prettier --write '**/*.{ts,json}'"
+  },
+  "lint-staged": {
+    "*.{js,ts,json}": [
+      "prettier --write",
+      "eslint --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
+      "git add"
+    ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged",
+      "pre-commit": "pretty-quick --staged && lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
@@ -42,9 +52,20 @@
     "@types/jest": "^26.0.21",
     "@types/react": "^17.0.3",
     "@types/react-native": "^0.63.52",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
     "babel-jest": "^26.6.3",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-tsc": "^2.0.0",
     "husky": "^5.2.0",
     "jest": "^26.6.3",
+    "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "react-native": "^0.64.0",
