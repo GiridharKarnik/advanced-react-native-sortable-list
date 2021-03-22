@@ -1,6 +1,6 @@
 {
   "name": "advanced-react-native-sortable-list",
-  "version": "0.0.0-development",
+  "version": "0.2.4",
   "description": "A versatile list component that helps you generate a list whose items can be sorted.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -48,6 +48,8 @@
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
     "@testing-library/react-native": "^7.2.0",
     "@types/jest": "^26.0.21",
     "@types/react": "^17.0.3",
@@ -83,5 +85,26 @@
   "homepage": "https://github.com/GiridharKarnik/advanced-react-native-sortable-list#readme",
   "directories": {
     "lib": "lib"
+  },
+  "release": {
+    "branches": [
+      "master",
+      "next"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json"
+          ],
+          "message": "chore(release): update package.json version to ${nextRelease.version} [skip ci]"
+        }
+      ]
+    ]
   }
 }

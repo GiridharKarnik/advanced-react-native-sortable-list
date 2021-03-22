@@ -17,7 +17,15 @@ jobs:
         with:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install
-      - run: npm publish
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build lib
+        run: npm build
+
+      - name: Release
+        uses: cycjimmy/semantic-release-action@v2
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACTION_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
