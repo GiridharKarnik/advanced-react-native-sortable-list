@@ -24,6 +24,13 @@ Wrap the rendered items with the `DraggableList` component imported from `advanc
 `onDragEnd`: This is a callback which is invoked as and when the user changes the order of the displayed items. You can listen to this, to update the component
 state or to perform other side effects.
 
+### To run the example project
+
+1. Clone the repo.
+2. `cd example && yarn install`
+3. `yarn start`
+4. `yarn android` or `yarn ios` depending on your target device.
+
 ### Screencast
 
 ![example](gif/example_screencast.gif)
