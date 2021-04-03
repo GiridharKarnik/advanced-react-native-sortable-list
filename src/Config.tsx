@@ -1,7 +1,10 @@
 import { Easing } from 'react-native-reanimated';
 
-export interface Positions {
-  [id: string]: number;
+export interface Positions<T> {
+  [id: string]: {
+    position: number;
+    item: T;
+  };
 }
 
 export const animationConfig = {

@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react';
+import { useState, useCallback } from 'react';
 
 export interface ViewMeasurements {
   y: number;
@@ -23,7 +23,7 @@ const useComponentSize = (): [ViewMeasurements | undefined, any] => {
           pageX: number,
           pageY: number,
         ) => {
-          setSize({x, y, width, height, pageX, pageY});
+          setSize({ x, y, width, height, pageX, pageY });
         },
       );
     }

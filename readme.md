@@ -12,19 +12,28 @@ Wrap the rendered items with the `DraggableList` component imported from `advanc
 <DraggableList
     onDragEnd={onDragEnd}
     rowHeight={100}
-    rowCount={data.length}>
-    {data.map(({ name, info }) => {
-        return (<RowItem id={name} key={name} name={name} info={info} />);
+    data={data}>
+    {/*This is just an example, you can render your list with which ever logic pleases you*/}
+    {data.map(({ name, info, uri }) => {
+        return (
+            <RowItem id={name} key={name} name={name} uri={uri} info={info} />
+        );
     })}
 </DraggableList>
 ```
 
 **Note:** Make sure to give each row item a unique id. The lib uses this id to sense any changes to the order of items in the rendered list.
 
-`onDragEnd`: This is a callback which is invoked as and when the user changes the order of the displayed items. You can listen to this, to update the component
-state or to perform other side effects.
+### Component props
+
+* `onDragEnd`: This is a callback which is invoked as and when the user changes the order of the displayed items. You can listen to this, to update the component
+state or to perform other side effects. It returns an array which contains the data items in the updated order.
+* `rowHeight`: The height of the rows within the list. This lib does not support lists with items of dynamic/variable height. I am definitely planning to support it in the future.
+* `data`: An array of items which was originally used to render the list items.
 
 ### To run the example project
+
+Alternative you can clone the repo and play with the provided example.
 
 1. Clone the repo.
 2. `cd example && yarn install`

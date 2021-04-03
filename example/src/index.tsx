@@ -1,8 +1,14 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import DraggableList, { Positions } from 'advanced-react-native-sortable-list';
+import DraggableList from 'advanced-react-native-sortable-list';
 
-const data = [
+interface DataItem {
+  name: string;
+  info: string;
+  uri: string;
+}
+
+const data: Array<DataItem> = [
   {
     name: 'Malabar giant squirrel',
     info:
@@ -149,18 +155,20 @@ const RowItem: React.FC<RowItemProps> = ({ name, info, uri }) => {
 };
 
 const ExampleList: React.FC = () => {
-  const onDragEnd = (positions: Positions) => {
-    console.log(`updated Positions, ${JSON.stringify(positions)}`);
+  const onDragEnd = (updatedList: Array<DataItem>) => {
+    console.log(`updated Positions, ${JSON.stringify(updatedList)}`);
   };
+
+  if (data.length === 0) {
+    return null;
+  }
 
   return (
     <View style={styles.screen}>
       <Text style={styles.introText}>Touch and hold to begin sorting</Text>
 
-      <DraggableList
-        onDragEnd={onDragEnd}
-        rowHeight={100}
-        rowCount={data.length}>
+      <DraggableList onDragEnd={onDragEnd} rowHeight={100} data={data}>
+        {/*This is just an example, you can render your list with which ever logic pleases you*/}
         {data.map(({ name, info, uri }) => {
           return (
             <RowItem id={name} key={name} name={name} uri={uri} info={info} />

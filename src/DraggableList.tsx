@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedRef,
@@ -10,20 +10,18 @@ import Draggable from './Draggable';
 import useComponentSize, { ViewMeasurements } from './useComponentSize';
 import { Positions } from './Config';
 
-interface DraggableListProps {
-  children: Array<ReactElement<{ id: string }>>;
-  //TODO: Dynamically calculate row height
+interface DraggableListProps<T> {
+  data: Array<T>;
   rowHeight: number;
-  rowCount: number;
-  onDragEnd: (diffs: Positions) => void;
+  onDragEnd: (updatedList: Array<T>) => void;
+  children: Array<ReactElement<{ id: string }>>;
 }
 
-const DraggableList: React.FC<DraggableListProps> = ({
-  children,
-  rowHeight,
-  rowCount,
-  onDragEnd,
-}) => {
+const DraggableList = <T extends object>(
+  props: DraggableListProps<T> & { children?: ReactNode },
+) => {
+  const { children, rowHeight, data, onDragEnd } = props;
+
   //Used to force a re-render on the component after updating "positions" shared value.
   const [, setRefresh] = useState<{}>({});
 
@@ -33,10 +31,15 @@ const DraggableList: React.FC<DraggableListProps> = ({
 
   const containerHeight = useSharedValue<number>(0);
 
-  const positions = useSharedValue<Positions>(
+  const positions = useSharedValue<Positions<T>>(
     Object.assign(
       {},
-      ...children.map((child, index) => ({ [child.props.id]: index })),
+      ...children.map((child, index) => ({
+        [child.props.id]: {
+          position: index,
+          item: data[index],
+        },
+      })),
     ),
   );
 
@@ -53,19 +56,36 @@ const DraggableList: React.FC<DraggableListProps> = ({
     scrollY.value = event.nativeEvent.contentOffset.y;
   };
 
+  const rowCount = data.length;
+
   /**
    * Here we update the "positions" shared value as and when the no of children change.
    * The component is forced to re-render by setting state using an object type value.
    */
   useEffect(() => {
-    if (rowCount !== Object.keys(positions.value).length) {
+    if (rowCount > 0 && rowCount !== Object.keys(positions.value).length) {
       positions.value = Object.assign(
         {},
-        ...children.map((child, index) => ({ [child.props.id]: index })),
+        ...children.map((child, index) => ({
+          [child.props.id]: {
+            position: index,
+            item: data[index],
+          },
+        })),
       );
       setRefresh({});
     }
-  }, [children, positions, rowCount]);
+  }, [data, children, positions, rowCount]);
+
+  const onDragEndCb = (positions: Positions<T>) => {
+    const updatedList = new Array(data.length);
+
+    Object.values(positions).forEach(({ position, item }) => {
+      updatedList[position] = item;
+    });
+
+    onDragEnd(updatedList);
+  };
 
   return (
     <ScrollView
@@ -84,7 +104,7 @@ const DraggableList: React.FC<DraggableListProps> = ({
       bounces={false}
       scrollEventThrottle={16}
       onLayout={onLayout}>
-      {children.map(child => {
+      {children.map((child) => {
         if (positions.value[child.props.id] === undefined) {
           return null;
         }
@@ -99,7 +119,7 @@ const DraggableList: React.FC<DraggableListProps> = ({
             scrollY={scrollY}
             positions={positions}
             scrollEnabled={scrollEnabled}
-            onDragEnd={onDragEnd}>
+            onDragEnd={onDragEndCb}>
             {child}
           </Draggable>
         );
