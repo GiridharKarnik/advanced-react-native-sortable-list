@@ -19,29 +19,32 @@ import Animated, {
 
 import { animationConfig, getOrder, getPosition, Positions } from './Config';
 
-interface DraggableProps {
+interface DraggableProps<T> {
   children: ReactNode;
   rowHeight: number;
   scrollRef: MutableRefObject<any>;
   id: string | number;
-  positions: Animated.SharedValue<Positions>;
+  positions: Animated.SharedValue<Positions<T>>;
   containerHeight: Animated.SharedValue<number>;
   scrollY: Animated.SharedValue<number>;
   scrollEnabled: Animated.SharedValue<boolean>;
-  onDragEnd: (diffs: Positions) => void;
+  onDragEnd: (diffs: Positions<T>) => void;
 }
 
-const Draggable: React.FC<DraggableProps> = ({
-  children,
-  rowHeight,
-  scrollRef,
-  id,
-  scrollY,
-  positions,
-  scrollEnabled,
-  containerHeight,
-  onDragEnd,
-}) => {
+const Draggable = <T extends object>(props: DraggableProps<T> & { children?: ReactNode }) => {
+
+  const {
+    children,
+    rowHeight,
+    scrollRef,
+    id,
+    scrollY,
+    positions,
+    scrollEnabled,
+    containerHeight,
+    onDragEnd,
+  } = props;
+
   const longPressRef = useRef();
   const panRef = useRef();
 
@@ -49,11 +52,11 @@ const Draggable: React.FC<DraggableProps> = ({
 
   const contentHeight = Object.keys(positions.value).length * rowHeight;
 
-  const position = getPosition(positions.value[id]!, rowHeight);
+  const position = getPosition(positions.value[id]!.position, rowHeight);
   const translateY = useSharedValue(position.y);
 
   useAnimatedReaction(
-    () => positions.value[id]!,
+    () => positions.value[id]!.position,
     newOrder => {
       if (!beingDragged.value) {
         const pos = getPosition(newOrder, rowHeight);
@@ -80,17 +83,18 @@ const Draggable: React.FC<DraggableProps> = ({
         );
 
         // 2. We swap the positions
-        const oldOlder = positions.value[id];
-        if (newOrder !== oldOlder) {
+        const oldOrder = positions.value[id].position;
+        // const oldOrder1 = updatedArray.value.find(x => x)
+        if (newOrder !== oldOrder) {
           const idToSwap = Object.keys(positions.value).find(
-            key => positions.value[key] === newOrder,
+            key => positions.value[key].position === newOrder,
           );
           if (idToSwap) {
             // Spread operator is not supported in worklets
             // And Object.assign doesn't seem to be working on alpha.6
             const newPositions = JSON.parse(JSON.stringify(positions.value));
-            newPositions[id] = newOrder;
-            newPositions[idToSwap] = oldOlder;
+            newPositions[id].position = newOrder;
+            newPositions[idToSwap].position = oldOrder;
             positions.value = newPositions;
           }
         }
@@ -122,7 +126,7 @@ const Draggable: React.FC<DraggableProps> = ({
       }
     },
     onEnd: () => {
-      const newPosition = getPosition(positions.value[id]!, rowHeight);
+      const newPosition = getPosition(positions.value[id]!.position, rowHeight);
       translateY.value = withTiming(newPosition.y, animationConfig, () => {
         runOnJS(onDragEnd)(positions.value);
       });
