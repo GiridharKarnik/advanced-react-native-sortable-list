@@ -26,7 +26,7 @@ state or to perform other side effects.
 
 ### Screencast
 
-![example](example/gif/example_screencast.gif)
+![example](gif/example_screencast.gif)
 
 ### Roadmap
 
