@@ -3,9 +3,9 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import DraggableList from 'advanced-react-native-sortable-list';
 
 interface DataItem {
-  name: string,
-  info: string,
-  uri: string
+  name: string;
+  info: string;
+  uri: string;
 }
 
 const data: Array<DataItem> = [
@@ -159,7 +159,7 @@ const ExampleList: React.FC = () => {
     console.log(`updated Positions, ${JSON.stringify(updatedList)}`);
   };
 
-  if(data.length === 0) {
+  if (data.length === 0) {
     return null;
   }
 
@@ -167,10 +167,8 @@ const ExampleList: React.FC = () => {
     <View style={styles.screen}>
       <Text style={styles.introText}>Touch and hold to begin sorting</Text>
 
-      <DraggableList
-        onDragEnd={onDragEnd}
-        rowHeight={100}
-        data={data}>
+      <DraggableList onDragEnd={onDragEnd} rowHeight={100} data={data}>
+        {/*This is just an example, you can render your list with which ever logic pleases you*/}
         {data.map(({ name, info, uri }) => {
           return (
             <RowItem id={name} key={name} name={name} uri={uri} info={info} />
