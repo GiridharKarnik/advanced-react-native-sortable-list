@@ -31,8 +31,9 @@ interface DraggableProps<T> {
   onDragEnd: (diffs: Positions<T>) => void;
 }
 
-const Draggable = <T extends object>(props: DraggableProps<T> & { children?: ReactNode }) => {
-
+const Draggable = <T extends object>(
+  props: DraggableProps<T> & { children?: ReactNode },
+) => {
   const {
     children,
     rowHeight,
@@ -57,7 +58,7 @@ const Draggable = <T extends object>(props: DraggableProps<T> & { children?: Rea
 
   useAnimatedReaction(
     () => positions.value[id]!.position,
-    newOrder => {
+    (newOrder) => {
       if (!beingDragged.value) {
         const pos = getPosition(newOrder, rowHeight);
         translateY.value = withTiming(pos.y, animationConfig);
@@ -87,7 +88,7 @@ const Draggable = <T extends object>(props: DraggableProps<T> & { children?: Rea
         // const oldOrder1 = updatedArray.value.find(x => x)
         if (newOrder !== oldOrder) {
           const idToSwap = Object.keys(positions.value).find(
-            key => positions.value[key].position === newOrder,
+            (key) => positions.value[key].position === newOrder,
           );
           if (idToSwap) {
             // Spread operator is not supported in worklets
