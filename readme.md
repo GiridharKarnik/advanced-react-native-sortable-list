@@ -34,6 +34,10 @@ state or to perform other side effects.
    
 2. Support for horizontally scrolling list.
 
+### Contributing
+
+* Pull requests and questions are welcome. 😄
+
 ### Inspiration
 
 This was inspired by William Candillon's fantastic [chrome example](https://www.youtube.com/watch?v=-39OEXk_mWc).
